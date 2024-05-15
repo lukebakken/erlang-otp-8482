@@ -1,0 +1,4 @@
+*.beam
+*.bin
+erl_crash.dump
+venv/
