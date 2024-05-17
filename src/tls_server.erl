@@ -10,6 +10,7 @@ start() ->
     logger:set_application_level(ssl, debug),
     {ok, Cwd} = file:get_cwd(),
     ok = io:format("[INFO] tls_server working directory:~tp~n", [Cwd]),
+    Default = ssl:signature_algs(default, 'tlsv1.3'),
     SslOpts = [
         {cacertfile, "./tls-gen/one_intermediate/result/chained_ca_certificate.pem"},
         {certfile, "./tls-gen/one_intermediate/result/server_certificate.pem"},
@@ -19,7 +20,8 @@ start() ->
         {crl_check, false},
         {verify, verify_peer},
         {fail_if_no_peer_cert, true},
-        {log_level, debug}
+        {log_level, debug},
+        {signature_algs_cert, Default ++ [{sha, rsa}]}
     ],
     ListenSocket = listen(SslOpts),
     accept_and_handshake(SslOpts, ListenSocket).
