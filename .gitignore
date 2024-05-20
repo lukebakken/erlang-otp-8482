@@ -2,3 +2,4 @@
 *.bin
 erl_crash.dump
 venv/
+log/
